@@ -6,6 +6,8 @@ package hangman;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.Hashtable;
 import javax.swing.*;
 
 /**
@@ -180,6 +182,8 @@ class CreateGame{
     String difficulty;
     JFrame frame;
     JPanel gamePanel;
+    GenerateData file = new GenerateData(); 
+    
     CreateGame(String cat, String diff, JFrame f){
         category = cat;
         difficulty = diff;
@@ -190,6 +194,21 @@ class CreateGame{
         gamePanel = new JPanel();
         gamePanel.setBackground(Color.red);
         frame.add(gamePanel);
+    }
+}
+
+// class reads the data from the file, add it to dictionary, and picks a random word
+// from the list to play hangman
+class GenerateData {
+    Hashtable<String, ArrayList<String>> dictionaryOfWords ;
+    
+    // reads file and puts the category and words in 
+    GenerateData(){
+        dictionaryOfWords = new Hashtable<String,ArrayList<String>>();
+    }
+    // returns the random word from the selected category for the user to guess
+    public String getRandomWord(String category){
+        return "Hey!";
     }
 }
 
