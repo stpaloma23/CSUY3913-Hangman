@@ -6,8 +6,11 @@ package hangman;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.Random;
 import javax.swing.*;
 
 import java.awt.BasicStroke;
@@ -226,8 +229,10 @@ class CreateGame{
 
     GenerateData file = new GenerateData(); 
 
+    GenerateData data; 
     
-    CreateGame(String cat, String diff, JFrame f){
+    CreateGame(String cat, String diff, JFrame f) {
+        data = new GenerateData();
         category = cat;
         difficulty = diff;
         frame = f;
@@ -280,15 +285,79 @@ class CreateGame{
 // class reads the data from the file, add it to dictionary, and picks a random word
 // from the list to play hangman
 class GenerateData {
-    Hashtable<String, ArrayList<String>> dictionaryOfWords ;
-    
+    ArrayList<String> singerCategory ;
+    ArrayList<String> cityCategory ;
+    ArrayList<String> foodCategory ;
     // reads file and puts the category and words in 
     GenerateData(){
-        dictionaryOfWords = new Hashtable<String,ArrayList<String>>();
+        singerCategory  = new ArrayList<String>();
+        cityCategory = new ArrayList<String>();
+        foodCategory = new ArrayList<String>();
+        String fileName = "../Hangman/src/hangman/HangmanData.csv";
+        BufferedReader reader = null;
+        String csvLine;
+        try{
+            reader = new BufferedReader(new FileReader(fileName));
+            // skipping first row 
+            reader.readLine(); 
+            while((csvLine = reader.readLine() )!= null){
+                String[] csvToArr = csvLine.split(",");
+                String category = csvToArr[1].strip();
+                String word = csvToArr[0].strip();
+                if("singer".equals(category)){
+                    singerCategory.add(word);
+                }
+                if("food".equals(category)){
+                    foodCategory.add(word);
+                }
+                if("city".equals(category)){
+                    cityCategory.add(word);
+                }
+            }
+            // passes tests
+            System.out.println(foodCategory);
+            System.out.println(cityCategory);
+            System.out.println(singerCategory);
+            System.out.println(getRandomWord("city"));
+            System.out.println(getRandomWord("city"));
+            System.out.println(getRandomWord("city"));
+            System.out.println(getRandomWord("city"));
+
+        }
+        catch(Exception e){
+            System.out.println("cannot open file"); 
+        }
+        if(reader !=null){
+            try{
+            reader.close();
+            } 
+            catch (IOException e){
+                System.out.println("cannot close file");
+            }
+        }
     }
     // returns the random word from the selected category for the user to guess
     public String getRandomWord(String category){
-        return "Hey!";
+        category = category.strip();
+        if (category == "singer"){
+            int ind = getRandomNumber(singerCategory.size()-1);
+            return singerCategory.get(ind);
+        }
+        if (category == "food"){
+            int ind = getRandomNumber(foodCategory.size()-1);
+            return foodCategory.get(ind);
+        }
+        if (category == "city"){
+            int ind = getRandomNumber(cityCategory.size()-1);
+            return cityCategory.get(ind);
+        }
+        return "hey girl something's wrong";
+    }
+    
+    // generated a random index
+    private int getRandomNumber(int arrLen){
+        Random random = new Random();
+        return random.nextInt(arrLen - 0) + 0;
     }
 }
 

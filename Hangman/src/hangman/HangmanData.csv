@@ -1,0 +1,61 @@
+word,category ,word#
+Shanghai,city,1
+Paris,city,1
+Milan,city,1
+Rome,city,1
+Florence ,city,1
+New York,city,2
+Chicago ,city,1
+London,city,1
+Dubai ,city,1
+Johannesburg,city,1
+Cape Town,city,2
+Lagos,city,1
+Accra,city,1
+Miami,city,1
+San Juan,city,2
+Houston,city,1
+New Orleans,city,2
+Barcelona,city,1
+Tokyo,city,1
+Delhi,city,1
+Beyonce,singer,1
+Rihanna ,singer,1
+Alicia Keys ,singer,2
+Michael Jackson,singer,2
+Usher,singer,1
+Ed Sheeran,singer,2
+Taylor Swift,singer,2
+Whitney Houston,singer,2
+Katy Perry ,singer,2
+Jhene Aiko,singer,2
+Justin Bieber ,singer,2
+Lady Gaga,singer,2
+Shakira ,singer,1
+Ariana Grande,singer,2
+Brittney Spears ,singer,2
+Bruno Mars,singer,2
+Adele,singer,1
+The Weeknd ,singer,2
+Drake,singer,1
+John Legend,singer,2
+Tacos,food,1
+Fried Chicken,food,2
+Hamburger ,food,1
+Chicken Soup ,food,2
+Ramen,food,1
+Acai Bowl,food,2
+Avocado Toast ,food,2
+Quesadilla ,food,1
+Nachos,food,1
+Burrito ,food,1
+Dumplings,food,1
+Oxtails,food,1
+Jollof Rice,food,2
+Garlic Bread ,food,2
+Pasta,food,1
+Cheesecake ,food,1
+Sushi ,food,1
+Pizza,food,1
+Pad Thai ,food,2
+Guacamole ,food,1
