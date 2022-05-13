@@ -8,6 +8,11 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import java.awt.BasicStroke;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Line2D;
+
 /**
  *
  * @author palomast.clair nathan.atherley
@@ -175,21 +180,93 @@ class OpeningPage{
         
     }
 
+class DrawMan extends JPanel {
+    protected Hangman hang;
+    
+    public void setHangman(Hangman hang){
+        this.hang = hang;
+    }
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        this.setBackground(Color.white);
+        
+            System.out.println("in if statement");
+            Graphics2D g2 = (Graphics2D)g;
+            g2.setStroke(new BasicStroke(9));
+            g2.draw(new Line2D.Float(250,0,250,445)); // main, long vertical line
+            g2.draw(new Line2D.Float(105,0,250,0)); // top horizontal line 
+            g2.setStroke(new BasicStroke(5));              
+            g2.draw(new Line2D.Float(100,0,100,50));
+            g2.draw(new Line2D.Float(0,450,450,450));
+            //g2.draw(new Line2D.Float(150,350,150,450));
+            //g2.draw(new Line2D.Float(297,350,297,450));
+            //g2.draw(new Line2D.Float(0,350,150,450));
+            //g2.draw(new Line2D.Float(150,351,297,450));                
+            //g2.draw(new Line2D.Float(150,351,0,450));
+            //g2.draw(new Line2D.Float(150,450,300,350));
+            g2.setStroke(new BasicStroke(1));
+        
+        
+    }
+}
+         
+    
+
 class CreateGame{
     String category;
     String difficulty;
     JFrame frame;
     JPanel gamePanel;
+    //Graphics2D g1;
+    //int errors = 0; 
+    
     CreateGame(String cat, String diff, JFrame f){
         category = cat;
         difficulty = diff;
         frame = f;
     }
+    
+    private static final String[][] letter = {
+        {"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"},
+        {"A", "S", "D", "F", "G", "H", "J", "K", "L"},
+        {"Z", "X", "C", "V", "B", "N", "M"},
+    };
+    
+    
+  
+    
     public void launchGame(){
+        //Graphics g; 
         System.out.println(category+" "+ difficulty);
         gamePanel = new JPanel();
-        gamePanel.setBackground(Color.red);
-        frame.add(gamePanel);
+        gamePanel.setBackground(Color.white);
+        
+        JPanel keyboard = new JPanel(new GridBagLayout());
+        JPanel panRow;
+        GridBagConstraints c = new GridBagConstraints();
+        c.anchor = GridBagConstraints.SOUTH;
+        //c.weightx = 1d;
+        
+        for (int row = 0; row < letter.length; ++row){
+            panRow = new JPanel(new GridBagLayout());
+            
+            c.gridy = row;
+            
+            for (int col = 0; col < letter[row].length; ++col)
+                panRow.add(new JButton(letter[row][col]));
+            
+            keyboard.add(panRow, c);
+        }
+        DrawMan hp = new DrawMan();
+        hp.setPreferredSize(new Dimension(300,500));
+        gamePanel.add(keyboard);
+        gamePanel.add(hp);
+        frame.add(gamePanel); 
+        
+        
+      
     }
+     
 }
-
+    
