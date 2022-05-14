@@ -215,7 +215,8 @@ class DrawMan extends JPanel {
         
     }
 }
-         
+
+
     
 
 class CreateGame{
@@ -271,15 +272,27 @@ class CreateGame{
         }
         DrawMan hp = new DrawMan();
         hp.setPreferredSize(new Dimension(300,500));
+        
+        WordDisplay wd = new WordDisplay(this);
+        JPanel wordPan = wd.generatePanel();
+        
+        gamePanel.add(wordPan);
         gamePanel.add(keyboard);
         gamePanel.add(hp);
+        
+        
         frame.add(gamePanel); 
         
         
+        System.out.println("Checking category: " + category);
+        
+        
+        
       
-    }
-     
+    }  
 }
+
+
 
 
 // class reads the data from the file, add it to dictionary, and picks a random word
@@ -361,4 +374,42 @@ class GenerateData {
     }
 }
 
-
+class WordDisplay{
+    private GenerateData guessingW ;
+    private JPanel wordSlotPan = new JPanel();
+    private CreateGame game;
+    
+    WordDisplay(CreateGame cg){
+        game = cg;
+        guessingW = new GenerateData();
+        makeWordSlots();
+    }
+    
+    public JPanel generatePanel(){
+        
+        return wordSlotPan;
+    }
+    
+    
+    // word.split(" ")
+    private void makeWordSlots(){
+        //add(wordSlotPan, BorderLayout.CENTER);
+        String guessWord = guessingW.getRandomWord(game.category);
+        JButton[] wordSlots = new JButton[guessWord.length()];
+        
+        for (int ind = 0; ind < guessWord.length(); ind++){
+            JButton button = new JButton("____");
+            button.setOpaque(true);
+            button.setBorderPainted(false);
+            button.setBackground(Color.red);
+            wordSlots[ind] = button;
+            //wordSlots[ind].addActionListener(this);
+            wordSlotPan.add(button);
+            
+        }
+        System.out.println("Check word: " + guessWord);
+    
+    }
+    
+    
+}
