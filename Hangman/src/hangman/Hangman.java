@@ -50,7 +50,7 @@ class OpeningPage{
         public void launch(){
             frame = new JFrame("Hangman by Paloma and Nathan");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(1300,750);
+            frame.setSize(1300,800);
             frame.setResizable(false);  
             wrapper = new JPanel();
             wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.Y_AXIS));
@@ -192,6 +192,7 @@ class CreateGame{
     String difficulty;
     JFrame frame;
     JPanel gamePanel;
+    
     WordDisplay wd;
     DrawMan hp;
     GameStatus gStatus = new GameStatus();
@@ -199,7 +200,10 @@ class CreateGame{
     String wordToGuess; 
     ArrayList<JButton> keyboardArr = new ArrayList<>();
     int wrongGuesses = 0; 
-
+    CountdownTimer countdown;
+    Timer totalTime;
+    JLabel countdownTimer;
+   
     GenerateData file = new GenerateData(); 
     
     CreateGame(String cat, String diff, JFrame f) {
@@ -214,6 +218,42 @@ class CreateGame{
         {"A", "S", "D", "F", "G", "H", "J", "K", "L"},
         {"Z", "X", "C", "V", "B", "N", "M"},
     };
+   
+   class LuckyGuess implements ActionListener {
+       JTextField txtField = new JTextField(20);
+       JFrame jf = new JFrame("Lucky Guess");
+
+       LuckyGuess(){
+           
+           jf.setSize(400, 100);
+           JPanel bottom = new JPanel();
+           JButton luckyButton = new JButton("Lucky Guess");
+          
+           luckyButton.addActionListener(this);
+           
+           bottom.add(txtField);
+           bottom.add(luckyButton);
+           
+           jf.add(bottom);
+           jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+           jf.setVisible(true);
+           
+       }
+       
+       @Override
+       public void actionPerformed(ActionEvent arg0){
+           JButton jb = (JButton) arg0.getSource();
+           String wordInput = txtField.getText();
+           if(wordToGuess.strip().toLowerCase().equals(wordInput.strip().toLowerCase())){
+               gStatus.gameOver(true);
+           }
+           else{
+               gStatus.gameOver(false);
+           }
+           jf.setVisible(false);
+       }
+       
+    }
     
     public void launchGame(){
         gamePanel = new JPanel();
@@ -256,18 +296,25 @@ class CreateGame{
             button.addActionListener(new KeyBoardButtonActionListener(wd, hp)); 
         }
         gamePanel.add(wordPan);
+        JPanel guessP = new JPanel();
+        guessP.setPreferredSize(new Dimension(1300,50));
+        JButton takeAGuess = new JButton("Feeling Lucky?");
+        takeAGuess.setFont(new Font("Comic Sans MS", Font.PLAIN, 19));
+        guessP.add(takeAGuess);
+        gamePanel.add(guessP);
+
         //keyboard.setBackground(Color.magenta);
         gamePanel.add(keyboard);
         JPanel clockPanel = new JPanel();
-        JLabel countdownTimer = new JLabel();
+        countdownTimer = new JLabel();
         Font timerFont = new Font("Comic Sans MS", Font.PLAIN, 20);
-        CountdownTimer countdown = new CountdownTimer(difficulty, countdownTimer, hp);
+        countdown = new CountdownTimer(difficulty);
         countdown.start();
      
         countdownTimer.setFont(timerFont);
         JLabel timeKeeper = new JLabel();
         timeKeeper.setFont(timerFont);
-        Timer totalTime = new Timer(timeKeeper);
+        totalTime = new Timer(timeKeeper);
         totalTime.start();
         clockPanel.add(countdownTimer);
         clockPanel.add(timeKeeper);
@@ -275,6 +322,13 @@ class CreateGame{
         header.add(clockPanel);
         gamePanel.add(hp);
         
+
+        takeAGuess.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent arg0){
+                LuckyGuess lg = new LuckyGuess();
+            }
+        });
+      
         frame.add(gamePanel); 
         
     }  
@@ -321,6 +375,10 @@ class CreateGame{
                 dm.errorMade();
             }
             jb.setEnabled(false);
+            countdown.paused = true;
+            countdown = new CountdownTimer(difficulty);
+            countdown.start();
+            
         }
         
     }
@@ -344,6 +402,7 @@ class CreateGame{
         }
         // when the game is over exit out of panel, you either won or lost
         public void gameOver(boolean winStatus){
+            totalTime.paused = true;
             JPanel closingPanel = new JPanel(); 
             closingPanel.setPreferredSize(new Dimension(1300,750));
             gamePanel.setVisible(false);
@@ -351,7 +410,7 @@ class CreateGame{
             if(winStatus){
                 closingPanel.setBackground(Color.GREEN);
                 JLabel winLabel = new JLabel("Congratulations you won!"); 
-                JLabel timeLabel = new JLabel(timeConvertion(200));
+                JLabel timeLabel = new JLabel(timeConvertion(totalTime.timer));
                 closingPanel.add(winLabel);
                 closingPanel.add(timeLabel);
                 frame.add(closingPanel);
@@ -367,7 +426,7 @@ class CreateGame{
         private String timeConvertion(int sec){
             int mins = (sec/60)%60;
             int seconds = sec %60;
-            String time = mins+ " minutes and "+seconds;
+            String time = mins+ " minutes and "+seconds+ " seconds";
             return time;
         }
     }
@@ -376,13 +435,15 @@ class CreateGame{
     class CountdownTimer extends Thread {
         String dificulty; 
         int countdown;
-        JLabel clockTime; 
-        DrawMan dm;
-        CountdownTimer(String diff, JLabel timer, DrawMan d){
+        //JLabel clockTime; 
+        boolean paused;
+       // DrawMan dm;
+        CountdownTimer(String diff){
             dificulty = diff;
-            clockTime = timer;
+            //clockTime = timer;
+            paused = false;
             setTimer();
-            dm = d;
+            //dm = d;
         } 
         private void setTimer(){
             if (dificulty == "easy"){
@@ -399,16 +460,16 @@ class CreateGame{
             do{
                 try {
                     countdown -=1;
-                    clockTime.setText("Time Remaining: "+Integer.toString(countdown));
+                    countdownTimer.setText("Time Remaining: "+Integer.toString(countdown));
                     Thread.currentThread().sleep(1000);
                 } 
                 catch(InterruptedException e){return;};
                 if(countdown ==0){
                     setTimer();
-                    dm.errorMade();
+                    hp.errorMade();
                     // also have to remove a life;
                 }
-            } while(countdown != 0);
+            } while(countdown != 0 && !paused);
 
         }
     }
@@ -417,9 +478,11 @@ class CreateGame{
     class Timer extends Thread {
         JLabel timeLabel;
         int timer = 0;
+        boolean paused; 
 
         Timer(JLabel t){
             timeLabel = t;
+            paused = false;
         }
 
         public void run(){
@@ -431,7 +494,7 @@ class CreateGame{
                     Thread.currentThread().sleep(1000);
                 } 
                 catch(InterruptedException e){return;} 
-            } while(true);
+            } while(true && !paused);
 
         }
     }
