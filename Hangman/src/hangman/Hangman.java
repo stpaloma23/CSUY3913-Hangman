@@ -199,7 +199,7 @@ class CreateGame{
     // the word the user must guess
     String wordToGuess; 
     ArrayList<JButton> keyboardArr = new ArrayList<>();
-    int wrongGuesses = 0; 
+    //int wrongGuesses = 0; 
     CountdownTimer countdown;
     Timer totalTime;
     JLabel countdownTimer;
@@ -303,7 +303,6 @@ class CreateGame{
         guessP.add(takeAGuess);
         gamePanel.add(guessP);
 
-        //keyboard.setBackground(Color.magenta);
         gamePanel.add(keyboard);
         JPanel clockPanel = new JPanel();
         countdownTimer = new JLabel();
@@ -318,7 +317,6 @@ class CreateGame{
         totalTime.start();
         clockPanel.add(countdownTimer);
         clockPanel.add(timeKeeper);
-        //clockPanel.setBackground(Color.red);
         header.add(clockPanel);
         gamePanel.add(hp);
         
@@ -392,7 +390,6 @@ class CreateGame{
             for(JButton button: wordPanel){
                 wordPanelWord += button.getText();
             }
-           
             
             System.out.println(wordPanelWord +" "+ wordToGuess);
             System.out.println(wordPanelWord.toLowerCase().strip()+" "+ wordToGuess.toLowerCase().strip());
@@ -403,7 +400,8 @@ class CreateGame{
         // when the game is over exit out of panel, you either won or lost
         public void gameOver(boolean winStatus){
             totalTime.paused = true;
-            JPanel closingPanel = new JPanel(); 
+            JPanel closingPanel = new JPanel(new GridLayout(8,4)); 
+            
             closingPanel.setPreferredSize(new Dimension(1300,750));
             gamePanel.setVisible(false);
             closingPanel.setVisible(true);
@@ -411,16 +409,46 @@ class CreateGame{
                 closingPanel.setBackground(Color.GREEN);
                 JLabel winLabel = new JLabel("Congratulations you won!"); 
                 JLabel timeLabel = new JLabel(timeConvertion(totalTime.timer));
+                
+                winLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 50));
+                timeLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 50));
+                
+                winLabel.setHorizontalAlignment(JLabel.CENTER);
+                timeLabel.setHorizontalAlignment(JLabel.CENTER);
+                          
                 closingPanel.add(winLabel);
                 closingPanel.add(timeLabel);
                 frame.add(closingPanel);
             }
             else{
-                JLabel loseLabel = new JLabel("Better luck next time :/"); 
-                closingPanel.add(loseLabel);
+                JLabel rightAnsw= new JLabel("The word was: "+wordToGuess);
+                JLabel closeLabel = new JLabel("Better luck next time :/"); 
+                
+                closeLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 50));
+                rightAnsw.setFont(new Font("Comic Sans MS", Font.PLAIN, 50));
+                
+                closeLabel.setHorizontalAlignment(JLabel.CENTER);
+                rightAnsw.setHorizontalAlignment(JLabel.CENTER);
+                
+                closingPanel.add(rightAnsw);
+                closingPanel.add(closeLabel);
+                
                 closingPanel.setBackground(Color.RED);
                 frame.add(closingPanel);
             }
+            
+            JButton playAgain = new JButton("Play Again");
+            playAgain.setFont(new Font("Comic Sans MS", Font.PLAIN, 50));
+     
+            playAgain.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent arg0){
+                OpeningPage op = new OpeningPage();
+                op.launch();
+                frame.setVisible(false);
+            }
+            });
+            closingPanel.add(playAgain);
+            
         }
         
         private String timeConvertion(int sec){
@@ -433,26 +461,26 @@ class CreateGame{
     
     // how much time you have to guess the letter before losing a life 
     class CountdownTimer extends Thread {
-        String dificulty; 
+        //String dificulty; 
         int countdown;
         //JLabel clockTime; 
         boolean paused;
        // DrawMan dm;
         CountdownTimer(String diff){
-            dificulty = diff;
+            difficulty = diff;
             //clockTime = timer;
             paused = false;
             setTimer();
             //dm = d;
         } 
         private void setTimer(){
-            if (dificulty == "easy"){
+            if ("easy".equals(difficulty)){
                 countdown = 20;
             }
-            if (dificulty == "medium"){
+            if ("medium".equals(difficulty)){
                 countdown = 13;
             }
-            if (dificulty == "hard"){
+            if ("hard".equals(difficulty)){
                 countdown = 7;
             }
         }
@@ -549,8 +577,6 @@ class CreateGame{
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            this.setBackground(Color.white);
-
             Graphics2D g2 = (Graphics2D)g;
             g2.setStroke(new BasicStroke(9));
             g2.draw(new Line2D.Float(250,0,250,445)); // main, long vertical line
