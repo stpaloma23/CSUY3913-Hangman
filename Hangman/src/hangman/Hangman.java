@@ -23,12 +23,6 @@ import java.awt.geom.Line2D;
  * @author palomast.clair nathan.atherley
  */
 
-/*What we have left to do: 
-- draw the hanging man 
-- make the timer coordinate with the hang man 
-- check to see if the right word was guessed
-*/
-
 public class Hangman {
 
     /**
@@ -52,7 +46,7 @@ class OpeningPage{
         JPanel wrapper;
         OpeningPage(){}
         public void launch(){
-            frame = new JFrame("Hangman");
+            frame = new JFrame("Hangman by Paloma and Nathan");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(1300,750);
             frame.setResizable(false);  
@@ -181,7 +175,6 @@ class OpeningPage{
         class PlayButtonListener implements ActionListener{
             @Override
             public void actionPerformed(ActionEvent arg0){
-                JButton jb = (JButton) arg0.getSource();
                 if(dificulty != null && category!=null){
                     CreateGame cg = new CreateGame(category, dificulty, frame);
                     cg.launchGame();
@@ -190,228 +183,6 @@ class OpeningPage{
             }
         }
         
-    }
-
-class DrawMan extends JPanel {
-    //protected Hangman hang;
-    //protected CreateGame gc = new CreateGame();
-        
-    
-    
-    @Override
-    protected void paintComponent(Graphics g) {
-        
-        
-        super.paintComponent(g);
-        this.setBackground(Color.white);
-        
-            Graphics2D g2 = (Graphics2D)g;
-            g2.setStroke(new BasicStroke(9));
-            g2.draw(new Line2D.Float(250,0,250,445)); // main, long vertical line
-            g2.draw(new Line2D.Float(105,0,250,0)); // top horizontal line 
-            g2.setStroke(new BasicStroke(5));              
-            g2.draw(new Line2D.Float(100,0,100,50));
-            g2.draw(new Line2D.Float(0,450,450,450));
-            g2.setStroke(new BasicStroke(1));
-            
-          /*  
-            // head/face
-            g.drawOval(55,51,85,85);
-            g.fillOval(70,80,15,15);
-            g.fillOval(115,80,15,15);
-            g.drawLine(70, 110, 90, 110);
-            
-            // torso
-            g.drawRoundRect(65,135,70,100,30,30);
-            
-            // left arm
-            g.drawLine(65, 150, 5, 175);
-            
-            // right arm
-            g.drawLine(135, 150, 205, 175);
-            
-            // left leg
-            g.drawLine(65, 190, 65, 315);
-            
-            // right leg
-            g.drawLine(135, 190, 135, 315);
-            
-            // left foot
-            g.drawRoundRect(40,315,27,10,10,10);
-            
-            // right foot
-            g.drawRoundRect(133,315,27,10,10,10);
-*/
-    }
-    
-}
-
-// created an int error variable within the keyboardactionlistener class
-// to count the number of errors then going to create an object from the keyboardactionlistener class
-// in the DrawMan class then create if statements (based on the number of errors certain body parts a drawn)
-// wasn't working though
-class DrawHead extends JPanel {
-    //protected Hangman hang;
-    //protected CreateGame gc = new CreateGame();
-   
-    @Override
-    protected void paintComponent(Graphics g) {
-   
-        super.paintComponent(g);
-        this.setBackground(Color.white);
-        
-            Graphics2D g2 = (Graphics2D)g;
-         
-            // head/face
-            g.drawOval(55,51,85,85);
-            g.fillOval(70,80,15,15);
-            g.fillOval(115,80,15,15);
-            g.drawLine(70, 110, 90, 110);
-            
-           
-    }
-    
-}
-
-class DrawTorso extends JPanel {
-    //protected Hangman hang;
-    //protected CreateGame gc = new CreateGame();
-   
-    @Override
-    protected void paintComponent(Graphics g) {
-   
-        super.paintComponent(g);
-        this.setBackground(Color.white);
-        
-            Graphics2D g2 = (Graphics2D)g;
-            
-            // torso
-            g.drawRoundRect(65,135,70,100,30,30);
-            
-         
-    }
-    
-}
-
-class DrawLeftArm extends JPanel {
-    //protected Hangman hang;
-    //protected CreateGame gc = new CreateGame();
-   
-    @Override
-    protected void paintComponent(Graphics g) {
-   
-        super.paintComponent(g);
-        this.setBackground(Color.white);
-        
-            Graphics2D g2 = (Graphics2D)g;
-           
-            // left arm
-            g.drawLine(65, 150, 5, 175);
-    }
-    
-}
-
-class DrawRightArm extends JPanel {
-    //protected Hangman hang;
-    //protected CreateGame gc = new CreateGame();
-   
-    @Override
-    protected void paintComponent(Graphics g) {
-   
-        super.paintComponent(g);
-        this.setBackground(Color.white);
-        
-            Graphics2D g2 = (Graphics2D)g;
-         
-            // right arm
-            g.drawLine(135, 150, 205, 175);
-
-    }
-    
-}
-
-class DrawLeftLeg extends JPanel {
-    //protected Hangman hang;
-    //protected CreateGame gc = new CreateGame();
-   
-    @Override
-    protected void paintComponent(Graphics g) {
-   
-        super.paintComponent(g);
-        this.setBackground(Color.white);
-        
-            Graphics2D g2 = (Graphics2D)g;
-         
-            
-            // left leg
-            g.drawLine(65, 190, 65, 315);
-            
-          
-
-    }
-    
-}
-
-class DrawRightLeg extends JPanel {
-    //protected Hangman hang;
-    //protected CreateGame gc = new CreateGame();
-   
-    @Override
-    protected void paintComponent(Graphics g) {
-   
-        super.paintComponent(g);
-        this.setBackground(Color.white);
-        
-           
-            
-            // right leg
-            g.drawLine(135, 190, 135, 315);
-            
-            
-
-    }
-    
-}
-
-class DrawLeftFoot extends JPanel {
-    //protected Hangman hang;
-    //protected CreateGame gc = new CreateGame();
-   
-    @Override
-    protected void paintComponent(Graphics g) {
-   
-        super.paintComponent(g);
-        this.setBackground(Color.white);
-        
-            Graphics2D g2 = (Graphics2D)g;
-         
-            
-            // left foot
-            g.drawRoundRect(40,315,27,10,10,10);
-            
-          
-    }
-    
-}
-
-class DrawRightFoot extends JPanel {
-    //protected Hangman hang;
-    //protected CreateGame gc = new CreateGame();
-   
-    @Override
-    protected void paintComponent(Graphics g) {
-   
-        super.paintComponent(g);
-        this.setBackground(Color.white);
-        
-            Graphics2D g2 = (Graphics2D)g;
-         
-            
-            // right foot
-            g.drawRoundRect(133,315,27,10,10,10);
-
-    }
-    
 }
 
 class CreateGame{
@@ -420,9 +191,13 @@ class CreateGame{
     String difficulty;
     JFrame frame;
     JPanel gamePanel;
+    WordDisplay wd;
+    DrawMan hp;
+    GameStatus gStatus = new GameStatus();
     // the word the user must guess
     String wordToGuess; 
-    ArrayList<JButton> keyboardArr = new ArrayList<JButton>();
+    ArrayList<JButton> keyboardArr = new ArrayList<>();
+    int wrongGuesses = 0; 
 
     GenerateData file = new GenerateData(); 
     
@@ -440,7 +215,6 @@ class CreateGame{
     };
     
     public void launchGame(){
-        System.out.println(category+" "+ difficulty);
         gamePanel = new JPanel();
         //gamePanel.setBackground(Color.GRAY);
         JPanel header = new JPanel();
@@ -470,23 +244,15 @@ class CreateGame{
             
             }
         }
-        DrawMan hp = new DrawMan();
+        hp = new DrawMan();
         hp.setPreferredSize(new Dimension(300,600));
-        
-        
-        
-        WordDisplay wd = new WordDisplay(wordToGuess);
-        //KeyBoardButtonActionListener key = new KeyBoardButtonActionListener(wd);
-        
-        
-        
-        
-        
+      
+        wd = new WordDisplay(wordToGuess);
+     
         JPanel wordPan = wd.generatePanel();
         wordPan.setPreferredSize(new Dimension(1300,100));
         for(JButton button : keyboardArr){
-            button.addActionListener(new KeyBoardButtonActionListener(wd, err));
-            
+            button.addActionListener(new KeyBoardButtonActionListener(wd, hp)); 
         }
         gamePanel.add(wordPan);
         //keyboard.setBackground(Color.magenta);
@@ -494,7 +260,7 @@ class CreateGame{
         JPanel clockPanel = new JPanel();
         JLabel countdownTimer = new JLabel();
         Font timerFont = new Font("Comic Sans MS", Font.PLAIN, 20);
-        CountdownTimer countdown = new CountdownTimer(difficulty, countdownTimer);
+        CountdownTimer countdown = new CountdownTimer(difficulty, countdownTimer, hp);
         countdown.start();
      
         countdownTimer.setFont(timerFont);
@@ -510,20 +276,23 @@ class CreateGame{
         
         frame.add(gamePanel); 
         
-        System.out.println("Checking category: " + category);
     }  
+    
+    //the keyboard you use to play the game
     class KeyBoardButtonActionListener implements ActionListener {
         int errors;
         WordDisplay wd; 
         ArrayList<String> guessedWordAsList = new ArrayList<String>(); 
-        KeyBoardButtonActionListener(WordDisplay w, int err){
-            errors = err;
+        DrawMan dm;
+
+        KeyBoardButtonActionListener(WordDisplay w, DrawMan d){
             wd = w; 
             for(int i =0; i<wordToGuess.length();i++){
                 char letter = wordToGuess.charAt(i);
                 letter = Character.toLowerCase(letter);
                 guessedWordAsList.add(Character.toString(letter));
             }
+            dm = d;
         }
         @Override
         public void actionPerformed(ActionEvent arg0){
@@ -539,20 +308,237 @@ class CreateGame{
                 int index = guessedWordAsList.indexOf(letter);
  
                 while (index >= 0) {
-                    System.out.println(index);
                     JButton changeTextofButton = wordPanelArray.get(index);
                     changeTextofButton.setText(letter.toUpperCase());
                     index = wordToGuess.indexOf(letter, index + 1);
                     
                 }
                 int i = guessedWordAsList.indexOf(letter);
+                gStatus.continueGame(wordPanelArray, guessedWordAsList);
             }
             else{
                 jb.setBackground(Color.RED);
-                errors++;
+                dm.errorMade();
             }
             jb.setEnabled(false);
-            //return errors; 
+        }
+        
+    }
+     
+    // checks if the game should continue or not 
+    class GameStatus{
+        
+        // use this to check if the game should go on 
+        public void continueGame(ArrayList<JButton> wordPanel, ArrayList<String> guessedW){
+            String wordPanelWord = "";
+            for(JButton button: wordPanel){
+                wordPanelWord += button.getText();
+            }
+           
+            
+            System.out.println(wordPanelWord +" "+ wordToGuess);
+            System.out.println(wordPanelWord.toLowerCase().strip()+" "+ wordToGuess.toLowerCase().strip());
+            if(wordPanelWord.toLowerCase().strip().equals(wordToGuess.toLowerCase().strip())){
+                gameOver(true);
+            };
+        }
+        // when the game is over exit out of panel, you either won or lost
+        public void gameOver(boolean winStatus){
+            JPanel closingPanel = new JPanel(); 
+            closingPanel.setPreferredSize(new Dimension(1300,750));
+            gamePanel.setVisible(false);
+            closingPanel.setVisible(true);
+            if(winStatus){
+                closingPanel.setBackground(Color.GREEN);
+                JLabel winLabel = new JLabel("Congratulations you won!"); 
+                JLabel timeLabel = new JLabel(timeConvertion(200));
+                closingPanel.add(winLabel);
+                closingPanel.add(timeLabel);
+                frame.add(closingPanel);
+            }
+            else{
+                JLabel loseLabel = new JLabel("Better luck next time :/"); 
+                closingPanel.add(loseLabel);
+                closingPanel.setBackground(Color.RED);
+                frame.add(closingPanel);
+            }
+        }
+        
+        private String timeConvertion(int sec){
+            int mins = (sec/60)%60;
+            int seconds = sec %60;
+            String time = mins+ " minutes and "+seconds;
+            return time;
+        }
+    }
+    
+    // how much time you have to guess the letter before losing a life 
+    class CountdownTimer extends Thread {
+        String dificulty; 
+        int countdown;
+        JLabel clockTime; 
+        DrawMan dm;
+        CountdownTimer(String diff, JLabel timer, DrawMan d){
+            dificulty = diff;
+            clockTime = timer;
+            setTimer();
+            dm = d;
+        } 
+        private void setTimer(){
+            if (dificulty == "easy"){
+                countdown = 20;
+            }
+            if (dificulty == "medium"){
+                countdown = 13;
+            }
+            if (dificulty == "hard"){
+                countdown = 7;
+            }
+        }
+        public void run(){
+            do{
+                try {
+                    countdown -=1;
+                    clockTime.setText("Time Remaining: "+Integer.toString(countdown));
+                    Thread.currentThread().sleep(1000);
+                } 
+                catch(InterruptedException e){return;};
+                if(countdown ==0){
+                    setTimer();
+                    dm.errorMade();
+                    // also have to remove a life;
+                }
+            } while(countdown != 0);
+
+        }
+    }
+
+    // keeps track of total time running 
+    class Timer extends Thread {
+        JLabel timeLabel;
+        int timer = 0;
+
+        Timer(JLabel t){
+            timeLabel = t;
+        }
+
+        public void run(){
+            do{
+               try {
+
+                    timer +=1;
+                    timeLabel.setText("Time: "+Integer.toString(timer));
+                    Thread.currentThread().sleep(1000);
+                } 
+                catch(InterruptedException e){return;} 
+            } while(true);
+
+        }
+    }
+    
+    // displays the words that are in the guessed word
+    class WordDisplay{
+        // private GenerateData guessingW ;
+        private JPanel wordSlotPan = new JPanel();
+        //private String wordToGuess;
+        ArrayList<JButton> guessedWordButtons = new ArrayList<>();
+
+        WordDisplay(String word){
+            wordToGuess = word;
+            makeWordSlots();
+        }
+
+        public JPanel generatePanel(){
+
+            return wordSlotPan;
+        }
+
+        private void makeWordSlots(){
+            //add(wordSlotPan, BorderLayout.CENTER);
+            // String guessWord = guessingW.getRandomWord(game.category);
+            // JButton[] wordSlots = new JButton[wordToGuess.length()];
+
+            for (int ind = 0; ind < wordToGuess.length(); ind++){
+                JButton button;
+                Font displayWordF = new Font("Comic Sans MS", Font.PLAIN, 15);
+                if(wordToGuess.charAt(ind)== ' '){
+                    button = new JButton(" ");
+                }
+                else{
+                    button = new JButton("____");
+                }
+                button.setFont(displayWordF);
+                button.setOpaque(true);
+                button.setBorderPainted(false);
+                button.setFocusPainted(false);
+                button.setContentAreaFilled(false);
+                //wordSlots[ind] = button;
+                guessedWordButtons.add(button);
+                wordSlotPan.add(button);
+            }
+            System.out.println("Check word: " + wordToGuess);
+        }
+    }
+    
+    // draws the foundation and the body parts 
+    class DrawMan extends JPanel {
+        int error = 9;    
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            this.setBackground(Color.white);
+
+            Graphics2D g2 = (Graphics2D)g;
+            g2.setStroke(new BasicStroke(9));
+            g2.draw(new Line2D.Float(250,0,250,445)); // main, long vertical line
+            g2.draw(new Line2D.Float(105,0,250,0)); // top horizontal line 
+            g2.setStroke(new BasicStroke(5));              
+            g2.draw(new Line2D.Float(100,0,100,50));
+            g2.draw(new Line2D.Float(0,450,450,450));
+            g2.setStroke(new BasicStroke(1));
+
+            if(error<=8){
+               // head/face
+                g.drawOval(55,51,85,85);
+                g.fillOval(70,80,15,15);
+                g.fillOval(115,80,15,15);
+                g.drawLine(70, 110, 90, 110);
+            }
+            if(error <=7){
+                // torso
+                g.drawRoundRect(65,135,70,100,30,30);
+            }
+            if(error <=6){
+                // left arm
+                g.drawLine(65, 150, 5, 175);
+            }
+            if(error <=5){
+                // right arm
+                g.drawLine(135, 150, 205, 175);
+            }
+            if(error <=4){
+                // left leg
+                g.drawLine(65, 190, 65, 315);
+            }
+            if(error <=3){
+                // right leg
+                g.drawLine(135, 190, 135, 315);
+            }
+            if(error <=2){
+                // left foot
+                g.drawRoundRect(40,315,27,10,10,10);
+            }
+            if(error <=1){
+                 // right foot
+                g.drawRoundRect(133,315,27,10,10,10);
+            }
+            if(error ==0){
+                gStatus.gameOver(false);
+            }
+        }
+        public void errorMade(){
+            error-=1;
+            this.repaint();
         }
     }
 }
@@ -565,9 +551,9 @@ class GenerateData {
     ArrayList<String> foodCategory ;
     // reads file and puts the category and words in 
     GenerateData(){
-        singerCategory  = new ArrayList<String>();
-        cityCategory = new ArrayList<String>();
-        foodCategory = new ArrayList<String>();
+        singerCategory  = new ArrayList<>();
+        cityCategory = new ArrayList<>();
+        foodCategory = new ArrayList<>();
         String fileName = "../Hangman/src/hangman/HangmanData.csv";
         BufferedReader reader = null;
         String csvLine;
@@ -589,9 +575,8 @@ class GenerateData {
                     cityCategory.add(word);
                 }
             }
-
         }
-        catch(Exception e){
+        catch(IOException e){
             System.out.println("cannot open file"); 
         }
         if(reader !=null){
@@ -603,18 +588,19 @@ class GenerateData {
             }
         }
     }
+    
     // returns the random word from the selected category for the user to guess
     public String getRandomWord(String category){
         category = category.strip();
-        if (category == "singer"){
+        if ("singer".equals(category)){
             int ind = getRandomNumber(singerCategory.size()-1);
             return singerCategory.get(ind);
         }
-        if (category == "food"){
+        if ("food".equals(category)){
             int ind = getRandomNumber(foodCategory.size()-1);
             return foodCategory.get(ind);
         }
-        if (category == "city"){
+        if ("city".equals(category)){
             int ind = getRandomNumber(cityCategory.size()-1);
             return cityCategory.get(ind);
         }
@@ -627,108 +613,3 @@ class GenerateData {
         return random.nextInt(arrLen);
     }
 }
-
-class WordDisplay{
-    // private GenerateData guessingW ;
-    private JPanel wordSlotPan = new JPanel();
-    private CreateGame game;
-    private String wordToGuess;
-    ArrayList<JButton> guessedWordButtons = new ArrayList<JButton>();
-    
-    WordDisplay(String word){
-        wordToGuess = word;
-        makeWordSlots();
-    }
-    
-    public JPanel generatePanel(){
-        
-        return wordSlotPan;
-    }
-    
-    
-    // word.split(" ")
-    private void makeWordSlots(){
-        //add(wordSlotPan, BorderLayout.CENTER);
-        // String guessWord = guessingW.getRandomWord(game.category);
-        // JButton[] wordSlots = new JButton[wordToGuess.length()];
-        
-        for (int ind = 0; ind < wordToGuess.length(); ind++){
-            JButton button;
-            Font displayWordF = new Font("Comic Sans MS", Font.PLAIN, 15);
-            if(wordToGuess.charAt(ind)== ' '){
-                button = new JButton();
-            }
-            else{
-                button = new JButton("____");
-            }
-            button.setFont(displayWordF);
-            button.setOpaque(true);
-            button.setBorderPainted(false);
-            button.setFocusPainted(false);
-            button.setContentAreaFilled(false);
-            //wordSlots[ind] = button;
-            guessedWordButtons.add(button);
-            wordSlotPan.add(button);
-            
-        }
-        System.out.println("Check word: " + wordToGuess);
-    
-    }
-}
- 
-    
-class CountdownTimer extends Thread {
-    String dificulty; 
-    int countdown;
-    JLabel clockTime; 
-    CountdownTimer(String diff, JLabel timer){
-        dificulty = diff;
-        clockTime = timer;
-        if (diff == "easy"){
-            countdown = 20;
-        }
-        if (diff == "medium"){
-            countdown = 13;
-        }
-        if (diff == "hard"){
-            countdown = 7;
-        }
-    }
-    public void run(){
-        do{
-            try {
-                countdown -=1;
-                clockTime.setText("Time Remaining: "+Integer.toString(countdown));
-                System.out.println(countdown);
-                Thread.currentThread().sleep(1000);
-            } 
-            catch(InterruptedException e){return;};
-        } while(countdown != 0);
-        
-    }
-}
-
-class Timer extends Thread {
-    JLabel timeLabel;
-    int timer = 0;
-    
-    Timer(JLabel t){
-        timeLabel = t;
-    }
-    
-    public void run(){
-        do{
-           try {
-               
-                timer +=1;
-                timeLabel.setText("Time: "+Integer.toString(timer));
-                Thread.currentThread().sleep(1000);
-
-                System.out.println(timer);
-            } 
-            catch(InterruptedException e){return;} 
-        } while(true);
-        
-    }
-}
-
