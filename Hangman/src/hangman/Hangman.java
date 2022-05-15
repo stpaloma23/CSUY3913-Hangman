@@ -193,12 +193,18 @@ class OpeningPage{
     }
 
 class DrawMan extends JPanel {
-    protected Hangman hang;
+    //protected Hangman hang;
+    //protected CreateGame gc = new CreateGame();
+        
+    
     
     @Override
     protected void paintComponent(Graphics g) {
+        
+        
         super.paintComponent(g);
         this.setBackground(Color.white);
+        
             Graphics2D g2 = (Graphics2D)g;
             g2.setStroke(new BasicStroke(9));
             g2.draw(new Line2D.Float(250,0,250,445)); // main, long vertical line
@@ -207,12 +213,209 @@ class DrawMan extends JPanel {
             g2.draw(new Line2D.Float(100,0,100,50));
             g2.draw(new Line2D.Float(0,450,450,450));
             g2.setStroke(new BasicStroke(1));
+            
+          /*  
+            // head/face
+            g.drawOval(55,51,85,85);
+            g.fillOval(70,80,15,15);
+            g.fillOval(115,80,15,15);
+            g.drawLine(70, 110, 90, 110);
+            
+            // torso
+            g.drawRoundRect(65,135,70,100,30,30);
+            
+            // left arm
+            g.drawLine(65, 150, 5, 175);
+            
+            // right arm
+            g.drawLine(135, 150, 205, 175);
+            
+            // left leg
+            g.drawLine(65, 190, 65, 315);
+            
+            // right leg
+            g.drawLine(135, 190, 135, 315);
+            
+            // left foot
+            g.drawRoundRect(40,315,27,10,10,10);
+            
+            // right foot
+            g.drawRoundRect(133,315,27,10,10,10);
+*/
     }
     
 }
+
+// created an int error variable within the keyboardactionlistener class
+// to count the number of errors then going to create an object from the keyboardactionlistener class
+// in the DrawMan class then create if statements (based on the number of errors certain body parts a drawn)
+// wasn't working though
+class DrawHead extends JPanel {
+    //protected Hangman hang;
+    //protected CreateGame gc = new CreateGame();
+   
+    @Override
+    protected void paintComponent(Graphics g) {
+   
+        super.paintComponent(g);
+        this.setBackground(Color.white);
+        
+            Graphics2D g2 = (Graphics2D)g;
          
+            // head/face
+            g.drawOval(55,51,85,85);
+            g.fillOval(70,80,15,15);
+            g.fillOval(115,80,15,15);
+            g.drawLine(70, 110, 90, 110);
+            
+           
+    }
+    
+}
+
+class DrawTorso extends JPanel {
+    //protected Hangman hang;
+    //protected CreateGame gc = new CreateGame();
+   
+    @Override
+    protected void paintComponent(Graphics g) {
+   
+        super.paintComponent(g);
+        this.setBackground(Color.white);
+        
+            Graphics2D g2 = (Graphics2D)g;
+            
+            // torso
+            g.drawRoundRect(65,135,70,100,30,30);
+            
+         
+    }
+    
+}
+
+class DrawLeftArm extends JPanel {
+    //protected Hangman hang;
+    //protected CreateGame gc = new CreateGame();
+   
+    @Override
+    protected void paintComponent(Graphics g) {
+   
+        super.paintComponent(g);
+        this.setBackground(Color.white);
+        
+            Graphics2D g2 = (Graphics2D)g;
+           
+            // left arm
+            g.drawLine(65, 150, 5, 175);
+    }
+    
+}
+
+class DrawRightArm extends JPanel {
+    //protected Hangman hang;
+    //protected CreateGame gc = new CreateGame();
+   
+    @Override
+    protected void paintComponent(Graphics g) {
+   
+        super.paintComponent(g);
+        this.setBackground(Color.white);
+        
+            Graphics2D g2 = (Graphics2D)g;
+         
+            // right arm
+            g.drawLine(135, 150, 205, 175);
+
+    }
+    
+}
+
+class DrawLeftLeg extends JPanel {
+    //protected Hangman hang;
+    //protected CreateGame gc = new CreateGame();
+   
+    @Override
+    protected void paintComponent(Graphics g) {
+   
+        super.paintComponent(g);
+        this.setBackground(Color.white);
+        
+            Graphics2D g2 = (Graphics2D)g;
+         
+            
+            // left leg
+            g.drawLine(65, 190, 65, 315);
+            
+          
+
+    }
+    
+}
+
+class DrawRightLeg extends JPanel {
+    //protected Hangman hang;
+    //protected CreateGame gc = new CreateGame();
+   
+    @Override
+    protected void paintComponent(Graphics g) {
+   
+        super.paintComponent(g);
+        this.setBackground(Color.white);
+        
+           
+            
+            // right leg
+            g.drawLine(135, 190, 135, 315);
+            
+            
+
+    }
+    
+}
+
+class DrawLeftFoot extends JPanel {
+    //protected Hangman hang;
+    //protected CreateGame gc = new CreateGame();
+   
+    @Override
+    protected void paintComponent(Graphics g) {
+   
+        super.paintComponent(g);
+        this.setBackground(Color.white);
+        
+            Graphics2D g2 = (Graphics2D)g;
+         
+            
+            // left foot
+            g.drawRoundRect(40,315,27,10,10,10);
+            
+          
+    }
+    
+}
+
+class DrawRightFoot extends JPanel {
+    //protected Hangman hang;
+    //protected CreateGame gc = new CreateGame();
+   
+    @Override
+    protected void paintComponent(Graphics g) {
+   
+        super.paintComponent(g);
+        this.setBackground(Color.white);
+        
+            Graphics2D g2 = (Graphics2D)g;
+         
+            
+            // right foot
+            g.drawRoundRect(133,315,27,10,10,10);
+
+    }
+    
+}
 
 class CreateGame{
+    //int errors; 
     String category;
     String difficulty;
     JFrame frame;
@@ -270,11 +473,19 @@ class CreateGame{
         DrawMan hp = new DrawMan();
         hp.setPreferredSize(new Dimension(300,600));
         
+        
+        
         WordDisplay wd = new WordDisplay(wordToGuess);
+        //KeyBoardButtonActionListener key = new KeyBoardButtonActionListener(wd);
+        
+        
+        
+        
+        
         JPanel wordPan = wd.generatePanel();
         wordPan.setPreferredSize(new Dimension(1300,100));
         for(JButton button : keyboardArr){
-            button.addActionListener(new KeyBoardButtonActionListener(wd));
+            button.addActionListener(new KeyBoardButtonActionListener(wd, err));
             
         }
         gamePanel.add(wordPan);
@@ -302,9 +513,11 @@ class CreateGame{
         System.out.println("Checking category: " + category);
     }  
     class KeyBoardButtonActionListener implements ActionListener {
+        int errors;
         WordDisplay wd; 
         ArrayList<String> guessedWordAsList = new ArrayList<String>(); 
-        KeyBoardButtonActionListener(WordDisplay w){
+        KeyBoardButtonActionListener(WordDisplay w, int err){
+            errors = err;
             wd = w; 
             for(int i =0; i<wordToGuess.length();i++){
                 char letter = wordToGuess.charAt(i);
@@ -336,8 +549,10 @@ class CreateGame{
             }
             else{
                 jb.setBackground(Color.RED);
+                errors++;
             }
             jb.setEnabled(false);
+            //return errors; 
         }
     }
 }
