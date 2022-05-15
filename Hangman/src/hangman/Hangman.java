@@ -22,7 +22,9 @@ import java.awt.geom.Line2D;
  *
  * @author palomast.clair nathan.atherley
  */
-
+/* to do: 
+fix the timers: make them start and stop at the right times, 
+*/
 public class Hangman {
 
     /**
@@ -186,7 +188,6 @@ class OpeningPage{
 }
 
 class CreateGame{
-    //int errors; 
     String category;
     String difficulty;
     JFrame frame;
@@ -313,7 +314,6 @@ class CreateGame{
                     index = wordToGuess.indexOf(letter, index + 1);
                     
                 }
-                int i = guessedWordAsList.indexOf(letter);
                 gStatus.continueGame(wordPanelArray, guessedWordAsList);
             }
             else{
@@ -531,9 +531,8 @@ class CreateGame{
             if(error <=1){
                  // right foot
                 g.drawRoundRect(133,315,27,10,10,10);
-            }
-            if(error ==0){
                 gStatus.gameOver(false);
+
             }
         }
         public void errorMade(){
