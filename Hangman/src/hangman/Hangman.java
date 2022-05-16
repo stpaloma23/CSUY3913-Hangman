@@ -31,7 +31,6 @@ public class Hangman {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
         OpeningPage op = new OpeningPage();
         op.launch();
 
@@ -41,7 +40,7 @@ public class Hangman {
 
 // launches the opening screen, user picks the category ad level they want
 class OpeningPage{
-        protected String dificulty;
+        protected String difficulty;
         protected String category;
         JButton[] buttonArr = new JButton[6];
         JFrame frame;
@@ -84,11 +83,11 @@ class OpeningPage{
             
             categoryButtonPanel.add(singer); categoryButtonPanel.add(city); categoryButtonPanel.add(food);
             wrapper.add(categoryButtonPanel);
-            JLabel dificultyLabel = new JLabel("Dificulty:");
-            dificultyLabel.setFont(subLabel);
-            dificultyLabel.setHorizontalAlignment(JLabel.CENTER);
-            JPanel dificultyButtonPanel = new JPanel();
-            dificultyButtonPanel.setBackground(Color.decode("#FFFDD0"));
+            JLabel difficultyLabel = new JLabel("Difficulty:");
+            difficultyLabel.setFont(subLabel);
+            difficultyLabel.setHorizontalAlignment(JLabel.CENTER);
+            JPanel difficultyButtonPanel = new JPanel();
+            difficultyButtonPanel.setBackground(Color.decode("#FFFDD0"));
             JButton easy = new JButton("Easy");
             JButton medium = new JButton("Medium");
             JButton hard = new JButton("Hard");
@@ -99,15 +98,15 @@ class OpeningPage{
             food.addActionListener(new CategoryButtonListener(buttonArr, this)); 
             buttonArr[3] = easy; buttonArr[4] = medium; buttonArr[5] = hard;
             
-            dificultyButtonPanel.add(easy); dificultyButtonPanel.add(medium); dificultyButtonPanel.add(hard);
+            difficultyButtonPanel.add(easy); difficultyButtonPanel.add(medium); difficultyButtonPanel.add(hard);
             
             JButton playButton = new JButton("Play!");
             playButton.setFont(subLabel);
             playButton.addActionListener(new PlayButtonListener());
             
             wrapper.add(categoryButtonPanel);
-            wrapper.add(dificultyLabel);
-            wrapper.add(dificultyButtonPanel);
+            wrapper.add(difficultyLabel);
+            wrapper.add(difficultyButtonPanel);
             wrapper.add(playButton);
             frame.add(wrapper);
             frame.show();   
@@ -141,18 +140,18 @@ class OpeningPage{
                     disableOtherButtonsInRow(1);
                 }
                 if(jb == bArr[3]){
-                    dificulty = "easy";
+                    difficulty = "easy";
                     jb.setBackground(Color.GREEN);
                     disableOtherButtonsInRow(2);
                 }
                 if(jb == bArr[4]){
-                    dificulty = "medium";
+                    difficulty = "medium";
                     jb.setBackground(Color.orange);
                     disableOtherButtonsInRow(2);
 
                 }
                 if(jb == bArr[5]){
-                    dificulty = "hard";
+                    difficulty = "hard";
                     jb.setBackground(Color.red);
                     disableOtherButtonsInRow(2);
                 }
@@ -177,14 +176,13 @@ class OpeningPage{
         class PlayButtonListener implements ActionListener{
             @Override
             public void actionPerformed(ActionEvent arg0){
-                if(dificulty != null && category!=null){
-                    CreateGame cg = new CreateGame(category, dificulty, frame);
+                if(difficulty != null && category!=null){
+                    CreateGame cg = new CreateGame(category, difficulty, frame);
                     cg.launchGame();
                     wrapper.setVisible(false);
                 }
             }
-        }
-        
+        }      
 }
 
 class CreateGame{
@@ -194,12 +192,11 @@ class CreateGame{
     JPanel gamePanel;
     
     WordDisplay wd;
-    DrawMan hp;
+    DrawMan drawMan;
     GameStatus gStatus = new GameStatus();
     // the word the user must guess
     String wordToGuess; 
     ArrayList<JButton> keyboardArr = new ArrayList<>();
-    //int wrongGuesses = 0; 
     CountdownTimer countdown;
     Timer totalTime;
     JLabel countdownTimer;
@@ -237,7 +234,6 @@ class CreateGame{
            jf.add(bottom);
            jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
            jf.setVisible(true);
-           
        }
        
        @Override
@@ -251,16 +247,13 @@ class CreateGame{
                gStatus.gameOver(false);
            }
            jf.setVisible(false);
-       }
-       
+       }   
     }
     
     public void launchGame(){
         gamePanel = new JPanel();
-        //gamePanel.setBackground(Color.GRAY);
         JPanel header = new JPanel();
         header.setPreferredSize(new Dimension(1300, 100));
-        //header.setBackground(Color.PINK);
         JLabel headerLabel = new JLabel(category + " Hangman!");
         headerLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 50));
         header.add(headerLabel);
@@ -285,15 +278,15 @@ class CreateGame{
             
             }
         }
-        hp = new DrawMan();
-        hp.setPreferredSize(new Dimension(300,600));
+        drawMan = new DrawMan();
+        drawMan.setPreferredSize(new Dimension(300,600));
       
         wd = new WordDisplay(wordToGuess);
      
         JPanel wordPan = wd.generatePanel();
         wordPan.setPreferredSize(new Dimension(1300,100));
         for(JButton button : keyboardArr){
-            button.addActionListener(new KeyBoardButtonActionListener(wd, hp)); 
+            button.addActionListener(new KeyBoardButtonActionListener(wd, drawMan)); 
         }
         gamePanel.add(wordPan);
         JPanel guessP = new JPanel();
@@ -318,7 +311,7 @@ class CreateGame{
         clockPanel.add(countdownTimer);
         clockPanel.add(timeKeeper);
         header.add(clockPanel);
-        gamePanel.add(hp);
+        gamePanel.add(drawMan);
         
 
         takeAGuess.addActionListener(new ActionListener(){
@@ -353,7 +346,6 @@ class CreateGame{
             String letter = jb.getText().toLowerCase();
             jb.setOpaque(true);
             jb.setBorderPainted(false);
-            System.out.println(guessedWordAsList);
             ArrayList<JButton> wordPanelArray = wd.guessedWordButtons;
             if (guessedWordAsList.contains(letter)){
                 
@@ -376,9 +368,7 @@ class CreateGame{
             countdown.paused = true;
             countdown = new CountdownTimer(difficulty);
             countdown.start();
-            
         }
-        
     }
      
     // checks if the game should continue or not 
@@ -390,9 +380,7 @@ class CreateGame{
             for(JButton button: wordPanel){
                 wordPanelWord += button.getText();
             }
-            
-            System.out.println(wordPanelWord +" "+ wordToGuess);
-            System.out.println(wordPanelWord.toLowerCase().strip()+" "+ wordToGuess.toLowerCase().strip());
+
             if(wordPanelWord.toLowerCase().strip().equals(wordToGuess.toLowerCase().strip())){
                 gameOver(true);
             };
@@ -461,17 +449,12 @@ class CreateGame{
     
     // how much time you have to guess the letter before losing a life 
     class CountdownTimer extends Thread {
-        //String dificulty; 
         int countdown;
-        //JLabel clockTime; 
         boolean paused;
-       // DrawMan dm;
         CountdownTimer(String diff){
             difficulty = diff;
-            //clockTime = timer;
             paused = false;
             setTimer();
-            //dm = d;
         } 
         private void setTimer(){
             if ("easy".equals(difficulty)){
@@ -494,8 +477,7 @@ class CreateGame{
                 catch(InterruptedException e){return;};
                 if(countdown ==0){
                     setTimer();
-                    hp.errorMade();
-                    // also have to remove a life;
+                    drawMan.errorMade();
                 }
             } while(countdown != 0 && !paused);
 
@@ -529,9 +511,7 @@ class CreateGame{
     
     // displays the words that are in the guessed word
     class WordDisplay{
-        // private GenerateData guessingW ;
         private JPanel wordSlotPan = new JPanel();
-        //private String wordToGuess;
         ArrayList<JButton> guessedWordButtons = new ArrayList<>();
 
         WordDisplay(String word){
@@ -545,10 +525,6 @@ class CreateGame{
         }
 
         private void makeWordSlots(){
-            //add(wordSlotPan, BorderLayout.CENTER);
-            // String guessWord = guessingW.getRandomWord(game.category);
-            // JButton[] wordSlots = new JButton[wordToGuess.length()];
-
             for (int ind = 0; ind < wordToGuess.length(); ind++){
                 JButton button;
                 Font displayWordF = new Font("Comic Sans MS", Font.PLAIN, 15);
@@ -563,11 +539,9 @@ class CreateGame{
                 button.setBorderPainted(false);
                 button.setFocusPainted(false);
                 button.setContentAreaFilled(false);
-                //wordSlots[ind] = button;
                 guessedWordButtons.add(button);
                 wordSlotPan.add(button);
             }
-            System.out.println("Check word: " + wordToGuess);
         }
     }
     
@@ -692,7 +666,7 @@ class GenerateData {
             int ind = getRandomNumber(cityCategory.size()-1);
             return cityCategory.get(ind);
         }
-        return "hey girl something's wrong";
+        return "error";
     }
     
     // generated a random index
